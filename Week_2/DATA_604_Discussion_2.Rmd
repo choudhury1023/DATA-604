@@ -1,0 +1,67 @@
+---
+title: "DATA 604 Week 2 Discussion"
+author: "Ahsanul Choudhury"
+date: "September 7, 2017"
+output:
+  html_document:
+     theme: cerulean
+     toc: true
+     toc_float:
+       collapsed: false
+       smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+For an $M/M/1$ queue with mean interarrival time 1.25 minutes and mean service time 1 minute, find all the five of $W_q,\: W,\: L_q,\: L,\: and \: \rho$. For each, interpret in words. Be sure to state all of your units (always!), and the relevant time frame of operation.
+
+
+### Solution
+
+
+```{r MM1, echo=TRUE}
+
+m_int <- 1.25                 # Mean interval Time
+m_serv <- 1                   # Mean Service Time
+n_serv <- 1                   # Number of server($M/M/1$ queue)
+
+lambda <- 1 / m_int           # Mean rate of arrival (lambda)
+mu <- 1 / m_serv              # Mean service rate (mu)
+
+rho <- lambda / mu            # Utilization of the server
+
+W_q <- rho / (mu * (1 - rho)) # Mean wait in the queue
+
+W <- 1 / (mu * (1 - rho))     # Mean wait in the system
+
+L_q <- rho^2 / (1 - rho)      # Mean number of customers in the queue
+
+L <- rho / (1 - rho)          # Mean number of customers in the system
+```
+
+
+
+$W_q$ = `r W_q`
+
+$W$ = `r W`
+
+$L_q$ = `r L_q`
+
+$L$ = `r L`
+
+$\rho$ = `r rho`
+
+***
+
+### Simio Run
+
+***Simio Model Run:***
+
+![Run](https://github.com/choudhury1023/DATA-604/raw/master/Week_2/Diss_2_model_run.png)
+
+
+***Simio Results:***
+
+![Results](https://github.com/choudhury1023/DATA-604/raw/master/Week_2/Diss_2_results.png)
