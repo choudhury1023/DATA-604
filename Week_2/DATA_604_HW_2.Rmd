@@ -1,0 +1,281 @@
+---
+title: "DATA 604 HW 2"
+author: "Ahsanul Choudhury"
+date: "September 10, 2017"
+output:
+  html_document:
+     theme: cerulean
+     toc: true
+     toc_float:
+       collapsed: false
+       smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+For an $M/M/1$ queue with mean interarrival time 1.25 minutes and mean service time 1 minute, find all the five of $W_q,\: W,\: L_q,\: L,\: and \: \rho$. For each, interpret in words. Be sure to state all of your units (always!), and the relevant time frame of operation.
+
+
+### 2.6.1
+
+
+```{r 2.6.1, echo=TRUE}
+
+m_int <- 1.25                 # Mean interval Time
+m_serv <- 1                   # Mean Service Time
+c <- 1                        # Number of server($M/M/1$ queue)
+
+lambda <- 1 / m_int           # Mean rate of arrival (lambda)
+mu <- 1 / m_serv              # Mean service rate (mu)
+
+rho <- lambda / mu            # Utilization of the server
+
+W_q <- rho / (mu * (1 - rho)) # Mean wait in the queue
+
+W <- 1 / (mu * (1 - rho))     # Mean wait in the system
+
+L_q <- rho^2 / (1 - rho)      # Mean number of customers in the queue
+
+L <- rho / (1 - rho)          # Mean number of customers in the system
+```
+
+
+$W_q$ = `r W_q`
+
+$W$ = `r W`
+
+$L_q$ = `r L_q`
+
+$L$ = `r L`
+
+$\rho$ = `r rho`
+
+
+***
+
+
+### 2.6.2
+
+
+```{r 2.6.2, echo=TRUE}
+a <- 0.1
+b<- 1.9
+
+sd <- sqrt((b - a)^2 / 12)
+
+var <- sd^2   # Variance of service time
+m_serv <- (a + b) / 2
+mu <- 1 / m_serv
+
+rho <- lambda / mu
+W_q <- (lambda * (var + 1 / mu^2)) / (2 * (1 - lambda/mu))
+W <- W_q + m_serv
+L_q <- lambda * W_q
+L <- lambda * W
+```
+
+$W_q$ = `r W_q`
+
+$W$ = `r W`
+
+$L_q$ = `r L_q`
+
+$L$ = `r L`
+
+$\rho$ = `r rho`
+
+
+With uniform distribution the numbers in both system and queue has dropped. Less wait time for service.
+
+
+***
+
+
+### 2.6.3
+
+
+```{r 2.6.3, echo=TRUE}
+m <- 1
+sd <- sqrt((a^2 + m^2 + b^2 -a*m -a*b - b*m) / 18)
+
+var <- sd^2
+m_serv <- (a + m + b) / 3
+
+rho <- lambda / mu
+W_q <- (lambda * (var + 1 / mu^2)) / (2 * (1 - lambda/mu))
+W <- W_q + m_serv
+L_q <- lambda * W_q
+L <- lambda * W
+```
+
+$W_q$ = `r W_q`
+
+$W$ = `r W`
+
+$L_q$ = `r L_q`
+
+$L$ = `r L`
+
+$\rho$ = `r rho`
+
+Triangular method achieves the lowest numbers in both system and queue. The wait time is the least out of all three.
+
+
+
+***
+
+
+### 2.6.5
+
+
+```{r 2.6.5, echo=TRUE}
+m_int <- 1.25                 
+m_serv <- 3                  
+c <- 3                        # Number of server(M/M/3 queue)
+
+m <- c(0:(c-1))
+
+p0 <- 1 / (sum((c * rho)^m / factorial(m)) + (c * rho)^c / (factorial(c) * (1- rho)))  # Probability that there are 0 customers in the system
+
+lambda <- 1 / m_int           
+mu <- 1 / m_serv              
+
+rho <- lambda / (c * mu)            
+
+L_q <- (p0 * (lambda / mu)^c * rho) / ((factorial(c) * (1 - rho)^2))
+L <- L_q + lambda / mu  
+W_q <- L_q / lambda
+
+W <- W_q + 1 / mu
+
+```
+
+
+$W_q$ = `r W_q`
+
+$W$ = `r W`
+
+$L_q$ = `r L_q`
+
+$L$ = `r L`
+
+$\rho$ = `r rho`
+
+Service time increased at the same times as the servers (3X), behaves almost the same as 1.
+
+
+***
+
+
+
+###2.6.12
+
+```{r 2.6.12, echo=TRUE}
+
+# Sign In 
+m_int <- 6
+m_serv <- 3
+c <- 2
+lambda <- 1/m_int
+mu <- 1 / m_serv  
+
+rho <- lambda / (c * mu) 
+
+m <- c(0:(c-1))
+
+p0 <- 1 / (sum((c * rho)^m / factorial(m)) + (c * rho)^c / (factorial(c) * (1- rho))) 
+
+L_q <- round(((p0 * (lambda / mu)^c * rho) / ((factorial(c) * (1 - rho)^2))),2)
+L <- round((L_q + lambda / mu), 2) 
+W_q <- round((L_q / lambda) ,2)
+W <- round((W_q + 1 / mu), 2)
+
+si <- c("Sign In", W_q, W, L_q, L, rho)
+
+# Registration
+m_serv <- 5
+c <- 1
+lambda_r <- 0.9 * lambda
+mu <- 1 / m_serv  
+
+rho <- lambda_r / (c * mu)
+
+m <- c(0:(c-1))
+
+p0 <- 1 / (sum((c * rho)^m / factorial(m)) + (c * rho)^c / (factorial(c) * (1- rho))) 
+          
+L_q <- round(((p0 * (lambda_r / mu)^c * rho) / ((factorial(c) * (1 - rho)^2))),2)
+L <- round((L_q + lambda_r / mu), 2) 
+W_q <- round((L_q / lambda_r) ,2)
+W <- round((W_q + 1 / mu), 2)
+
+r <- c("Registration", W_q, W, L_q, L, rho)
+  
+# Trauma Rooms
+m_serv <- 90
+c <- 2
+lambda_t <- 0.1 * lambda
+mu <- 1 / m_serv  
+
+rho <- lambda_t / (c * mu) 
+
+m <- c(0:(c-1))
+
+p0 <- 1 / (sum((c * rho)^m / factorial(m)) + (c * rho)^c / (factorial(c) * (1- rho))) 
+
+L_q <- round(((p0 * (lambda_t / mu)^c * rho) / ((factorial(c) * (1 - rho)^2))),2)
+L <- round((L_q + lambda_t / mu), 2) 
+W_q <- round((L_q / lambda_t) ,2)
+W <- round((W_q + 1 / mu), 2)
+
+tr <- c("Trauma Rooms", W_q, W, L_q, L, rho)
+
+# Exam Rooms
+m_serv <- 16
+c <- 3
+lambda_e <- 0.9 * lambda
+mu <- 1 / m_serv  
+
+rho <- lambda_e / (c * mu) 
+
+m <- c(0:(c-1))
+
+p0 <- 1 / (sum((c * rho)^m / factorial(m)) + (c * rho)^c / (factorial(c) * (1- rho))) 
+
+L_q <- round(((p0 * (lambda_e / mu)^c * rho) / ((factorial(c) * (1 - rho)^2))),2)
+L <- round((L_q + lambda_e / mu), 2) 
+W_q <- round((L_q / lambda_e) ,2)
+W <- round((W_q + 1 / mu), 2)
+
+er <- c("Exam Rooms", W_q, W, L_q, L, rho)
+
+# Treatment Rooms
+m_serv <- 15
+c <- 2
+lambda_t2 <- 0.9 * 0.6 * lambda + 0.1 * lambda
+mu <- 1 / m_serv  
+
+rho <- lambda_t2 / (c * mu) 
+
+m <- c(0:(c-1))
+
+p0 <- 1 / (sum((c * rho)^m / factorial(m)) + (c * rho)^c / (factorial(c) * (1- rho))) 
+
+L_q <- round(((p0 * (lambda_t2 / mu)^c * rho) / ((factorial(c) * (1 - rho)^2))),2)
+L <- round((L_q + lambda_t2 / mu), 2) 
+W_q <- round((L_q / lambda_t2) ,2)
+W <- round((W_q + 1 / mu), 2)
+
+tr2 <- c("Treatment Rooms", W_q, W, L_q, L, rho)
+
+hd <- c("Queue", "W-q", "W", "L_q", "L", "rho")
+
+df = data.frame(hd, si, r, tr, er, tr2)
+names(df) <- c(" ", "  ", "   ", "  ", "  ", "  ")
+knitr::kable(df)
+```
+
+
+System is stable( $\rho$ < 1), Treatment room may use another server.
