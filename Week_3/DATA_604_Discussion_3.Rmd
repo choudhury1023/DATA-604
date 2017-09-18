@@ -1,0 +1,83 @@
+---
+title: "DATA 604 Week 3 Discussion"
+author: "Ahsanul Choudhury"
+date: "September 12, 2017"
+output:
+  html_document:
+     theme: cerulean
+     toc: true
+     toc_float:
+       collapsed: false
+       smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r discussion3, echo=TRUE}
+# Purchase price
+oats.p <- 1.05
+peas.p <- 3.17
+beans.p <- 1.99
+barley.p <- 0.95
+
+# Sale price
+oats.s <- 1.29
+peas.s <- 3.76
+beans.s <- 2.23
+barley.s <- 1.65
+
+# Genetate Discrete Uniform Random demand for the season(90 days)
+
+set.seed(1023)
+oats.sale <- c(ceiling(runif(n = 90, min = -1, max = 10)))
+peas.sale <- c(ceiling(runif(n = 90, min = -1, max = 8)))
+beans.sale <- c(ceiling(runif(n = 90, min = -1, max = 14)))
+barley.sale <- c(ceiling(runif(n = 90, min = -1, max = 11)))
+
+par(mfrow=c(2,2))
+hist(oats.sale, xlab = "pounds", main = "Histogram of Oats Demand(lbs)")
+hist(peas.sale, xlab = "pounds", main = "Histogram of peas Demand(lbs)")
+hist(beans.sale, xlab = "pounds", main = "Histogram of Beans Demand(lbs)")
+hist(barley.sale, xlab = "pounds", main = "Histogram of Barley Demand(lbs)")
+
+par(mfrow=c(1,1))
+
+
+# Cost, Revenue and Profit
+
+cost <- oats.p * oats.sale + peas.p * peas.sale + beans.p * beans.sale + barley.p * barley.sale
+
+revenue <- oats.s * oats.sale + peas.s * peas.sale + beans.s * beans.sale + barley.s * barley.sale
+
+profit <- revenue - (oats.p * oats.sale + peas.p * peas.sale + beans.p * beans.sale + barley.p * barley.sale)
+
+
+day <- c(1:90)
+
+df <- data.frame(day, oats.sale, peas.sale, beans.sale, barley.sale, cost, revenue, profit )
+colnames(df) <- c("Day", "Oats Demand(lbs)", "Peas Demand(lbs)", "Beans Demand(lbs)", "Barley Demand(lbs)", "Cost($)", "Revenue($)", "Profit($)")
+knitr::kable(df)
+
+plot(cost, type = "o", col = "red", xlab = "Day", ylab = "Dollars", main = "Total Cost, Renenue and Profit by Day")
+lines(revenue, type = "o", col = "blue")
+lines(profit, type = "o", col = "green")
+
+# Total cost, revenue and profit in 90 days
+
+total.cost <- sum(cost)
+total.revenue <- sum(revenue)
+total.profit <- sum(profit)
+
+df1 <- data.frame(total.cost, total.revenue, total.profit)
+colnames(df1) <- c("Total Cost($)", "Total Revenue($)", "Total Profit($)")
+knitr::kable(df1)
+
+
+bar <- c(total.cost, total.revenue, total.profit)
+label <- c("Total Cost", "Total Revenue", "Total Profit")
+p <- barplot(bar, names.arg = label, col = "orange", ylab = "Dollars", main = "Total Cost, Revenue and Profit in 90 Days (Dollars)")
+mtext(at = p, text = bar)
+
+```
