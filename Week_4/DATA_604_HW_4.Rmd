@@ -1,0 +1,57 @@
+---
+title: "DATA 604 HW 4"
+author: "Ahsanul Choudhury"
+date: "September 24, 2017"
+output:
+  html_document:
+     theme: cerulean
+     toc: true
+     toc_float:
+       collapsed: false
+       smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### 2.6.9
+
+**Theoretical**
+
+```{r 2.6.9, echo=TRUE}
+MM1 <- function(m_int, m_serv, sd){
+  lambda <- 1 / m_int                                                   # Mean rate of arrival (lambda)
+  mu <- 1 / m_serv                                                      # Mean service rate (mu)  
+
+  var <- sd^2                                                           # Variance of service time
+  
+  rho <- lambda / mu                                                    # Utilization of the server
+  W_q <- (lambda * (var + 1 / mu^2)) / (2 * (1 - lambda/mu))            # Mean wait in the queue
+  W <- W_q + m_serv                                                     # Mean wait in the system
+  L_q <- lambda * W_q                                                   # Mean number of customers in the queue
+  L <- lambda * W                                                       # Mean number of customers in the system
+  
+  df <- data.frame(rho, W_q, W, L_q, L)
+  knitr::kable(df)
+  
+}
+
+
+
+MD1 <- MM1(1,0.9,0)
+MD1
+```
+***
+
+
+### 4.10.15
+
+
+**Got the following results afer running simulaton for 24 weeks with 4 days warm_up period and 10 replications:**
+
+
+![Simio Model](https://github.com/choudhury1023/DATA-604/raw/master/Week_4/10_repetations.png)
+
+Theory almost replicates the simulation for this instance.
