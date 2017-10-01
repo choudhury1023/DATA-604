@@ -1,0 +1,105 @@
+---
+title: "DATA 604 HW 5"
+author: "Ahsanul Choudhury"
+date: "October 1, 2017"
+output:
+  html_document:
+     theme: cerulean
+     toc: true
+     toc_float:
+       collapsed: false
+       smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Kelton Chapter 4.
+
+### 4.10.2 
+
+
+```{r 4.10.2, echo=TRUE}
+
+c <- 1                        # Machine capacity
+
+lambda <- 120                 # Mean rate of arrival (lambda)
+mu <- 190                     # Mean service rate (mu)
+
+rho <- lambda / (c * mu)
+
+m <- c(0:(c-1))
+
+p0 <- 1 / (sum((c * rho)^m / factorial(m)) + (c * rho)^c / (factorial(c) * (1- rho)))  # Probability that there are 0 entities in the system
+
+L_q <- (p0 * (lambda / mu)^c * rho) / ((factorial(c) * (1 - rho)^2))           # Mean number of entities in the queue
+
+L <- L_q + lambda / mu       # Mean number of entities in the system
+
+W_q <- L_q / lambda          # Mean wait in the queue
+
+W <- W_q + 1 / mu            # Mean wait in the system
+
+
+```
+
+$W_q$ = `r W_q`
+
+$W$ = `r W`
+
+$L_q$ = `r L_q`
+
+$L$ = `r L`
+
+$\rho$ = `r rho`
+
+
+Expected number of entities processed in 100 hours = `r 100/W`.
+
+
+***
+
+
+### 4.10.3
+
+** SMORE plot for the time entities spend in the system: **
+
+
+
+![SMORE Plot](https://github.com/choudhury1023/DATA-604/raw/master/Week_5/SMORE_plot.png)
+
+
+
+***
+
+
+### 4.10.9
+
+** Standard library object vs Simio process: **
+
+Simio process run time is much more faster at running 50 replications then the satandard library object run.
+
+Standard library object run time:
+
+![Standard Time](https://github.com/choudhury1023/DATA-604/raw/master/Week_5/object_run_time.png)
+
+
+
+Results:
+
+![Standard library object results](https://github.com/choudhury1023/DATA-604/raw/master/Week_5/object_run_result.png)
+
+
+![Process Run Results](https://github.com/choudhury1023/DATA-604/raw/master/Week_5/Simio_Process.png)
+
+
+***
+
+
+### 4.10.12
+
+** Animate: **
+
+![Animate using Simio Standard Symbols](https://github.com/choudhury1023/DATA-604/raw/master/Week_5/Animate.png)
