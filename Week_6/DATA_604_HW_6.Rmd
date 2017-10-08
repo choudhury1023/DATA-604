@@ -1,0 +1,68 @@
+---
+title: "DATA 604 HW 6"
+author: "Ahsanul Choudhury"
+date: "October 7, 2017"
+output:
+  html_document:
+     theme: cerulean
+     toc: true
+     toc_float:
+       collapsed: false
+       smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Kelton Chapter 5 Problems
+
+
+### 5.7.1
+
+**What is the difference between object property and object state?**
+
+
+- **Object properties** are input values that can be specified when we instantiate an object and does not change during simulation.
+- **Object states** are dynamic values associated with the object runspace and can change during simulatin run.
+
+***
+
+
+### 5.7.2
+
+**Consider a process associated with a Server object. What is the difference between a token's *parent* object and its *associated* object?**
+
+
+In a process associated with a Server object the token's *parent* object is the server itself and the *associted* object is the entity that triggers the process to execute.
+
+***
+
+
+### 5.7.3
+
+**Develop a queueing model that gives the steady-state values analogous to the values in Table 5.2 (Model 5-1 with expotential processing times at both stations).**
+
+
+![Queueing Model Results](https://github.com/choudhury1023/DATA-604/raw/master/Week_6/5_7_3.png)
+
+***
+
+
+### 5.7.4
+
+*Results*
+
+Run the created simio model for 8 hours (9:00am to 5:00pm) with 25 replication unsing transfer node method discussed on week 4 discussion to distribute the customers to the three written exam terminals and goth the following result:
+
+![5.7.4 Results](https://github.com/choudhury1023/DATA-604/raw/master/Week_6/5_7_4.png)
+
+
+
+### 5.7.5
+
+*Animation*
+
+Following is a screen shot of the animation for problem 5.7.4, I have used the default value of 1.4 meter per second for entity speed which is the average walking speed for human. The .spx file was submitted via blackbord.
+
+![5.7.5 Animation](https://github.com/choudhury1023/DATA-604/raw/master/Week_6/5_7_5_Animation.png)
