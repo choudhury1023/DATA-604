@@ -1,0 +1,52 @@
+---
+title: "DATA 604 Week 8 Discussion"
+author: "Ahsanul Choudhury"
+date: "October 18, 2017"
+output:
+  html_document:
+     theme: cerulean
+     toc: true
+     toc_float:
+       collapsed: false
+       smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Variance Reduction
+
+### STRATIFIED SAMPLING:
+
+Stratified sampling reduced variance by dividing the sample space by space to strata and then estimating the yield in each stratum. Stratificaton is most effective when the means of the strata are widely disperded. Stratification is effective for integrands that are monotone functions.
+
+
+Below is an example from the Rizzo text book which represents a more than 98% reduction in variance.
+
+```{r}
+M <- 10000 #number of replicates
+ k <- 10 #number of strata
+ r <- M / k #replicates per stratum
+ N <- 50 #number of times to repeat the estimation
+ T2 <- numeric(k)
+ estimates <- matrix(0, N, 2)
+ g <- function(x) {
+   exp(-x - log(1+x^2)) * (x > 0) * (x < 1) 
+ } 
+ for (i in 1:N) {
+  estimates[i, 1] <- mean(g(runif(M)))
+  for (j in 1:k)
+   T2[j] <- mean(g(runif(M/k, (j-1)/k, j/k)))
+  estimates[i, 2] <- mean(T2)
+}
+
+ estimates
+ 
+#The result of this simulation produces the following estimates.
+
+apply(estimates, 2, mean) 
+ 
+apply(estimates, 2, var) 
+```
