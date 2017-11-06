@@ -1,0 +1,34 @@
+---
+title: "DATA 604 HW10"
+author: "Ahsanul Choudhury"
+date: "November 5, 2017"
+output:
+  html_document:
+     theme: cerulean
+     toc: true
+     toc_float:
+       collapsed: false
+       smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Kelton Chapter 8 Problem 5
+
+To create the model I have used 2 model entities, 1 source, 2 servers and a sink. The servers are setup 4 meters away from the source and customer moving speed set as 1 mile per hour.
+
+![Model](https://github.com/choudhury1023/DATA-604/raw/master/Week_10/model_setup.png)
+
+A sequence tabel was created referencing to two model entities to control the source:
+
+![Source Control](https://github.com/choudhury1023/DATA-604/raw/master/Week_10/source_table.png)
+
+Following processes were created to get results:
+
+![Processes](https://github.com/choudhury1023/DATA-604/raw/master/Week_10/processes.png)
+
+Results:
+
+![Results](https://github.com/choudhury1023/DATA-604/raw/master/Week_10/results.png)
