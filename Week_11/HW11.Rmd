@@ -1,0 +1,54 @@
+---
+title: "DATA 604 HW 11"
+author: "Ahsanul Choudhury"
+date: "November 12, 2017"
+output:
+  html_document:
+     theme: cerulean
+     toc: true
+     toc_float:
+       collapsed: false
+       smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Kelton Chapter 9 Problem 2
+
+**Modify Model 9-1 to support preemption of the Doctor resource for Urgent patients. In particular, if all doctors are busy when an Urgent patient arrives, the Urgent patient should preempt a doctor from one of the other non-Urgent patients. Compare the results of the models. Would you advise that the emergency department make the corresponding change in the real system?**
+
+
+The model was created as per instruction in the book with a source, five servers, a sink, four moldel enteties and two resourses.
+
+![Model](https://github.com/choudhury1023/DATA-604/raw/master/Week_11/model.png)
+
+A table and a sequence table created based on patient type, patient mix, priority and service time:
+
+![Table](https://github.com/choudhury1023/DATA-604/raw/master/Week_11/table.png)
+
+![Sequence Table](https://github.com/choudhury1023/DATA-604/raw/master/Week_11/SequenceTable.png)
+
+Add-on processes:
+
+![Add-on Processes](https://github.com/choudhury1023/DATA-604/raw/master/Week_11/AddOn1.png)
+
+![Add-on processes](https://github.com/choudhury1023/DATA-604/raw/master/Week_11/AddOn2.png)
+
+Following user defined properties were added:
+
+![Properties](https://github.com/choudhury1023/DATA-604/raw/master/Week_11/properties.png)
+
+To support preemption of the Doctor resource for Urgent patients following add on process was created at **Doctor resource** for Doctor_EvaluatingSeizeRequest trigger and assigned to TraumaRooms capacity with the condition PatientData.Priority == 4:
+
+![Recourse Add-on Process](https://github.com/choudhury1023/DATA-604/raw/master/Week_11/ResourceRequest.png)
+
+An experiment with OptQuest addin was conducted and obtained the following results:
+
+![Result](https://github.com/choudhury1023/DATA-604/raw/master/Week_11/Results.png)
+
+
+
+
+
